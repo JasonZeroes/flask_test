@@ -11,12 +11,18 @@ def register():
     form = RegisterForm(request.form)
     if request.method == "POST" and form.validate():
         # 将数据保存到数据库当中
-        u = UserModel()
-        u.username = form.username.data
-        u.password = form.password.data
-        db.session.add(u)
-        db.session.commit()
-        return redirect(url_for("cms.登录"))
+        username = form.username.data
+        try:
+            user = db.session.query(UserModel).filter_by(username=username).first()
+            form.username.errors.append("用户名已注册!")
+            return render_template("reg-log.html", form=form, flags="注册")
+        except AttributeError:
+            u = UserModel()
+            u.username = form.username.data
+            u.password = form.password.data
+            db.session.add(u)
+            db.session.commit()
+            return redirect(url_for("cms.登录"))
     return render_template("reg-log.html", form=form, flags="注册")
 
 
@@ -37,9 +43,8 @@ def login():
                 response.set_cookie("password", password)
                 session["username"] = username
                 return response
-            else:
-                return render_template("reg-log.html", form=form, flags="登录")
         except AttributeError:
+            form.username.errors.append("用户名不存在!")
             return render_template("reg-log.html", form=form, flags="登录")
     return render_template("reg-log.html", form=form, flags="登录")
 
