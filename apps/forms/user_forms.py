@@ -29,7 +29,7 @@ class RegisterForm(LoginForm):
         label="确认密码: ",
         validators=[
             validators.DataRequired(message="密码必须填写!"),
-            validators.EqualTo("password", message="两次输入的面不一致!")
+            validators.EqualTo("password", message="两次输入的密码不一致!")
         ],
         # render_kw={"class": "form-control", "placeholder": "请确认密码"}
         render_kw={"class": "layui-input", "placeholder": "请确认密码"}
