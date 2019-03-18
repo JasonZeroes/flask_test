@@ -19,4 +19,3 @@ class UserModel(BaseModel, UserMixin):
 
     def check_password(self, user_password):
         return check_password_hash(self._password, user_password)
-

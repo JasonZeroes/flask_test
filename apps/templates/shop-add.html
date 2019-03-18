@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <style>
+        .lens{
+            color: #0C0C0C;
+            width: 350%;
+        }
+        .col{
+            color: #41d5ee;
+        }
+    </style>
+
+{% endblock %}
+{% block content %}
+ <!-- 中部开始 -->
+     <h1 class="logo">{{ flags }}商铺信息</h1>
+    <div class="wrapper">
+        <!-- 右侧主体开始 -->
+
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form action="" method="post" class="layui-form">
+                {% for item in form %}
+                    <div class="layui-form form-group">
+                        {{ item.label(class_="col-sm-3 control-label") }}
+                    </div>
+                    <div class="layui-input-inline">
+                        {{ item }}
+                        <span class="x-red">{{ item.errors[0] }}</span>
+                    </div>
+                {% endfor %}
+                <div class="layui-form-item">
+                    <button  class="layui-btn" lay-filter="add" lay-submit="">提交
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+
+{% endblock %}

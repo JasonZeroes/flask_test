@@ -48,7 +48,7 @@ def logout():
     return redirect(url_for("cms.登录"))
 
 
-@cms_bp.route("/a/")
-@login_required
-def aa():
-    return "哈哈哈!"
+# @cms_bp.route("/a/")
+# @login_required
+# def aa():
+#     return "哈哈哈!"

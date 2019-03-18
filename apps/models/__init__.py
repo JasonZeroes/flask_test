@@ -10,8 +10,13 @@ class BaseModel(db.Model):
 
     def set_form_attr(self, form_data: dict):
         for k, v in form_data.items():
-            if hasattr(self, k):
+            if hasattr(self, k) and k != "id":
                 setattr(self, k, v)
+
+    def __getitem__(self, item):
+        if hasattr(self, item):
+            return getattr(self, item)
 
 
 from .user_models import UserModel
+from .shop_models import ShopModel

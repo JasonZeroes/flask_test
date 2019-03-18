@@ -28,7 +28,7 @@ def create_app(config_str: str):
     # 注册配置文件
     app.config.from_object(config_str)
 
-    # 初始化将session保存到Redis中
+    # 初始化配置session保存到Redis中
     init_session(app)
 
     # 注册数据库
