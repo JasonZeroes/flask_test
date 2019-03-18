@@ -20,3 +20,5 @@ class BaseModel(db.Model):
 
 from .user_models import UserModel
 from .shop_models import ShopModel
+from .shop_models import MenuCateModel
+from .shop_models import MenusModel

@@ -45,6 +45,43 @@ class ShopModel(BaseModel):
                 "notice", "discount")
 
 
-class ShopCate(BaseModel):
-    """商铺列表"""
-    pass
+class MenuCateModel(BaseModel):
+    """菜品分类"""
+    # 分类编号
+    type_accumulation = db.Column(db.String(16))
+    # 分类名称
+    name = db.Column(db.String(32))
+    # 分类描述
+    description = db.Column(db.String(128), default='')
+    # 是否设为默认
+    is_default = db.Column(db.Boolean, default=False)
+    # 归属店铺
+    shop_pid = db.Column(db.String(32), db.ForeignKey("shop_model.pub_id"))
+    # 与店铺建立连接关系
+    shop = db.relationship(ShopModel, backref="categories")
+
+    def keys(self):
+        return "type_accumulation", "name", "description", "is_default"
+
+
+class MenusModel(BaseModel):
+    # 菜品名称
+    goods_name = db.Column(db.String(64))
+    # 菜品评分
+    rating = db.Column(db.Float, default=5.0)
+    # 归属店铺
+    shop_id = db.Column(db.String(16), db.ForeignKey("shop_model.pub_id"))
+    # 归属分类
+    category_id = db.Column(db.Integer, db.ForeignKey("menu_cate_model.id"))
+    # 和菜品表建立连接关系
+    cate = db.relationship(MenuCateModel, backref="menus")
+    # 菜品价格
+    goods_price = db.Column(db.Float, default=0.0)
+    # 月销售额
+    month_sales = db.Column(db.Integer, default=0)
+    # 评分数量
+    rating_count = db.Column(db.Integer, default=0)
+    # 菜品提示信息
+    tips = db.Column(db.String(128), default="")
+    # 菜品图片
+    goods_img = db.Column(db.String(128), default="")

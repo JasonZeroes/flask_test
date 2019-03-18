@@ -1,5 +1,5 @@
-from flask import render_template, url_for, redirect, session, current_app
-from flask_login import current_user, login_required
+from flask import render_template
+from flask_login import login_required
 
 from apps.cms import cms_bp
 

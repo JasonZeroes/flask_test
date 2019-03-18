@@ -29,9 +29,8 @@
         <xblock>
             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除
             </button>
-            <a href="{{ url_for('cms.商铺添加') }}">
-                <button class="layui-btn" onclick="member_adds('添加用户','shop-add.html','600','500')"><i
-                        class="layui-icon">&#xe608;</i>
+            <a href="{{ url_for('cms.菜品添加', pub_id=pub_id) }}">
+                <button class="layui-btn" onclick="member_adds('添加用户','shop-add.html','600','500')"><i class="layui-icon">&#xe608;</i>
                     添加
                 </button>
             </a>
@@ -43,28 +42,22 @@
                     <input type="checkbox" name="" value="">
                 </th>
                 <th>
-                    店铺ID
+                    菜品编号
                 </th>
                 <th>
-                    商铺名称
+                    菜品名称
                 </th>
                 <th>
-                    商铺评分
+                    菜品评分
                 </th>
                 <th>
-                    起送价格
+                    菜品价格
                 </th>
-                <th>
-                    菜品分类
+                 <th>
+                    菜品信息
                 </th>
-                <th>
-                    菜品管理
-                </th>
-                <th>
-                    优惠信息
-                </th>
-                <th>
-                    店铺公告
+                 <th>
+                    菜品图片
                 </th>
             </tr>
             </thead>
@@ -76,19 +69,11 @@
                         <input type="checkbox" value="1" name="">
                     </td>
                     <td>{{ item.id }}</td>
-                    <td><a href="{{ url_for('cms.商铺更新', pub_id=item.pub_id) }}">{{ item.shop_name }}</a></td>
-                    <td>{{ item.shop_rating }}</td>
-                     <td>{{ item.start_send }}</td>
-                    <td>
-                        <a href="{{ url_for('cms.菜品分类添加', pub_id=item.pub_id) }}">添加</a>&nbsp;<a href="{{  url_for('cms.菜品分类展示', pub_id=item.pub_id) }}">显示</a>
-                    </td>
-                    <td>
-                        <a href="{{ url_for('cms.菜品添加', pub_id=item.pub_id) }}">添加</a>&nbsp;<a href="{{ url_for('cms.菜品列表', pub_id=item.pub_id) }}">显示</a>
-                    </td>
-
-                    <td>{{ item.discount }}</td>
-                    <td>{{ item.notice }}</td>
-
+                    <td>{{ item.goods_name }}</td>
+                    <td>{{ item.rating }}</td>
+                    <td>{{ item.goods_price }}</td>
+                    <td>{{ item.tips }}</td>
+                    <td>{{ item.goods_img }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -197,14 +182,5 @@
             });
         }
     </script>
-    <script>
-        //百度统计可去掉
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+
 {% endblock %}

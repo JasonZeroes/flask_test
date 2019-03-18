@@ -4,7 +4,8 @@
     {{ falgs }}
 {% endblock %}
 
-{% block content %}
+{% block body %}
+    {% block content %}
     <div class="login-logo"><h1>Elm商家管理系统</h1></div>
     <div class="login-box">
         <form class="layui-form layui-form-pane" action="" method="post">
@@ -43,4 +44,5 @@
             </div>
         </form>
     </div>
+{% endblock %}
 {% endblock %}
