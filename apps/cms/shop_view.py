@@ -15,7 +15,7 @@ from apps.tools.tools import check_shop_pid
 def show_list():
     """查看商家列表"""
     user_id = current_user.id
-    form = ShopModel.query.filter_by(seller_id=user_id).all()
+    form = ShopModel.query.filter(ShopModel.seller_id == user_id, ShopModel.is_status == 0).all()
     return render_template("shop-list.html", form=form, flags="商铺列表展示")
 
 
@@ -57,9 +57,18 @@ def shop_update(pub_id):
     return render_template("shop-add.html", form=form, flags="更新")
 
 
+@cms_bp.route("/delete/<pub_id>", methods=["GET", "POST"], endpoint="商铺删除")
+@login_required
+def shop_delete(pub_id):
+    shop = ShopModel.query.filter_by(pub_id=pub_id).first()
+    shop.is_status = 1
+    db.session.commit()
+    return redirect(url_for("cms.商铺列表"))
+
+
 @cms_bp.route("/cate_list/<pub_id>", methods=["GET", "POST"], endpoint="菜品分类展示")
 def cate_list(pub_id):
-    form = MenuCateModel.query.filter_by(shop_pid=pub_id).all()
+    form = MenuCateModel.query.filter(MenuCateModel.shop_pid == pub_id, MenuCateModel.is_status == 0).all()
     return render_template("cate_list.html", form=form, pub_id=pub_id, flags="分类列表展示")
 
 
@@ -94,9 +103,18 @@ def cate_update(cate_id):
     return render_template("shop-add.html", form=form, flags="菜品分类更新")
 
 
+@cms_bp.route("/delete_cate/<cate_id>", methods=["GET", "POST"], endpoint="菜品分类删除")
+@login_required
+def cate_delete(cate_id):
+    cate = MenuCateModel.query.filter_by(id=cate_id).first()
+    cate.is_status = 1
+    db.session.commit()
+    return redirect(url_for("cms.菜品分类展示", pub_id=cate.shop_pid))
+
+
 @cms_bp.route("/menus_list/<pub_id>", methods=["GET", "POST"], endpoint="菜品列表")
 def menus_list(pub_id):
-    form = MenusModel.query.filter_by(shop_id=pub_id).all()
+    form = MenusModel.query.filter(MenusModel.shop_id == pub_id, MenusModel.is_status == 0).all()
     return render_template("menus_list.html", form=form, pub_id=pub_id, flags="菜品展示")
 
 
@@ -146,6 +164,15 @@ def menus_update(pub_id, menu_id):
             db.session.commit()
             return redirect(url_for("cms.菜品列表", pub_id=menu.shop_id))
     return render_template("shop-add.html", form=form, pub_id=pub_id, flags="菜品更新")
+
+
+@cms_bp.route("/delete_menu/<pub_id>/<menu_id>", methods=["GET", "POST"], endpoint="菜品删除")
+@login_required
+def cate_delete(pub_id, menu_id):
+    menu = MenusModel.query.filter_by(id=menu_id).first()
+    menu.is_status = 1
+    db.session.commit()
+    return redirect(url_for("cms.菜品列表", pub_id=pub_id))
 
 
 @cms_bp.route('/uptoken/')
