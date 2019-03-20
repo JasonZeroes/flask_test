@@ -52,6 +52,11 @@ class ShopForm(Form):
         ],
         render_kw={"class": "layui-input lens"}
     )
+    # 店铺图片
+    shop_img = StringField(
+        label="店铺图片",
+        id='image-input', widget=HiddenInput()
+    )
 
     # 自定义验证器,验证起送价格和运送费
     def validate_start_send(self, obj):
@@ -127,7 +132,8 @@ class MenusForm(Form):
     )
     goods_img = StringField(
         label="菜品图片:",
-        id="image-input", widget=HiddenInput()
+        id="image-input",
+        # widget=HiddenInput()
     )
 
     def validate_goods_price(self, obj):

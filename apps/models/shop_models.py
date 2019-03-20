@@ -85,3 +85,6 @@ class MenusModel(BaseModel):
     tips = db.Column(db.String(128), default="")
     # 菜品图片
     goods_img = db.Column(db.String(128), default="")
+
+    def keys(self):
+        return "goods_name", "rating", "goods_price", "tips", "goods_img"
