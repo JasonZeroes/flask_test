@@ -22,6 +22,7 @@ def register():
             db.session.commit()
             return redirect(url_for("cms.登录"))
         form.username.errors.append("用户名已注册!")
+
     return render_template("reg-log.html", form=form, flags="注册")
 
 

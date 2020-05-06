@@ -127,18 +127,17 @@ def menus_add(pub_id):
         menu = MenusModel()
 
         # 本地上传
-        # img = request.form.get("goods_img")
-        # print(img)
-        # menu.goods_img = img
-        # menu.save()
+        img = request.files.get("goods_img")
+        name = img.filename
+        img.save(name)
 
         # 服务器到七牛云
-        file = request.files.get("goods_img")
-        access_key = 'A3VIwn1FYmz0pvzT2t5GVZqzRmaBsN4NUg9xzM0g'
-        secret_key = 'RCd_cUofd0Zx1uo8dbZcJidcJsB4PlEtwsC16v8G'
-        q = Auth(access_key=access_key, secret_key=secret_key)
-        token = q.upload_token('elm1106')
-        ret, info = put_data(up_token=token, key=None, data=file.read())
+        # file = request.files.get("goods_img")
+        # access_key = 'A3VIwn1FYmz0pvzT2t5GVZqzRmaBsN4NUg9xzM0g'
+        # secret_key = 'RCd_cUofd0Zx1uo8dbZcJidcJsB4PlEtwsC16v8G'
+        # q = Auth(access_key=access_key, secret_key=secret_key)
+        # token = q.upload_token('elm1106')
+        # ret, info = put_data(up_token=token, key=None, data=file.read())
 
         menu.shop_id = pub_id
         menu.set_form_attr(form.data)
@@ -156,6 +155,7 @@ def menus_update(pub_id, menu_id):
     if request.method == "GET":
         data = MenusModel.query.filter_by(id=menu_id).first()
         form = MenusForm(shop, data=dict(data))
+        goods_img = data.goods_img
     elif request.method == "POST":
         form = MenusForm(shop, request.form)
         if form.validate():
@@ -163,7 +163,7 @@ def menus_update(pub_id, menu_id):
             menu.set_form_attr(form.data)
             db.session.commit()
             return redirect(url_for("cms.菜品列表", pub_id=menu.shop_id))
-    return render_template("shop-add.html", form=form, pub_id=pub_id, flags="菜品更新")
+    return render_template("shop-add.html", form=form, pub_id=pub_id, goods_img=goods_img, flags="菜品更新")
 
 
 @cms_bp.route("/delete_menu/<pub_id>/<menu_id>", methods=["GET", "POST"], endpoint="菜品删除")

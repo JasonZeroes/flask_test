@@ -1,6 +1,6 @@
 from apps import create_app
 
-config_str = "apps.settings.DevConfig"
+config_str = "apps.settings.DevCMSConfig"
 app = create_app(config_str)
 
 if __name__ == '__main__':

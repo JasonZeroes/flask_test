@@ -22,3 +22,5 @@ from .user_models import UserModel
 from .shop_models import ShopModel
 from .shop_models import MenuCateModel
 from .shop_models import MenusModel
+from .buyer_model import BuyerModel
+from .order_models import OrderModel, OrderGoodsModel

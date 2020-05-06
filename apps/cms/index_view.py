@@ -14,7 +14,7 @@ from apps.cms import cms_bp
 #         return redirect(url_for("cms.登录"))
 
 
-@cms_bp.route("/", endpoint="首页")
+@cms_bp.route("/index/", endpoint="首页")
 @login_required
 def index():
     return render_template("index.html")

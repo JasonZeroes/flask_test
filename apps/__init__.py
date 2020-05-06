@@ -21,9 +21,15 @@ def init_login_manager(app):
     login_manager.init_app(app)
 
 
+def register_api_bp(app):
+    from apps.apis import api_bp
+    app.register_blueprint(api_bp)
+
+
 def create_app(config_str: str):
     """初始化创建app"""
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="./cms_statics", static_url_path="/static")
+    # app.add_url_rule()
 
     # 注册配置文件
     app.config.from_object(config_str)
@@ -40,4 +46,12 @@ def create_app(config_str: str):
     # 注册蓝图
     register_bp(app)
 
+    return app
+
+
+def create_api_app(config_str: str):
+    app = Flask(__name__, static_folder="./web_client", static_url_path="")
+    app.config.from_object(config_str)
+    register_db(app)
+    register_api_bp(app)
     return app
